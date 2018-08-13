@@ -291,6 +291,7 @@
   <ItemGroup>
     <Compile Include="Assets\my scripts\MonsterController.cs" />
     <Compile Include="Assets\my scripts\PlayerController.cs" />
+    <Compile Include="Assets\my scripts\PlayerUnique.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
