@@ -289,9 +289,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\my scripts\EnemySight.cs" />
+    <Compile Include="Assets\my scripts\LinkedNodes.cs" />
     <Compile Include="Assets\my scripts\MonsterController.cs" />
+    <Compile Include="Assets\my scripts\NavigationAgent.cs" />
     <Compile Include="Assets\my scripts\PlayerController.cs" />
     <Compile Include="Assets\my scripts\PlayerUnique.cs" />
+    <Compile Include="Assets\my scripts\WaypointGraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
