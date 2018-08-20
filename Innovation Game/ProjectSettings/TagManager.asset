@@ -7,6 +7,7 @@ TagManager:
   - Goal
   - node
   - waypoint graph
+  - Monster
   layers:
   - Default
   - TransparentFX

@@ -8,11 +8,11 @@ public class NavigationAgent : MonoBehaviour {
 
     //Navigation Variables
     public WaypointGraph graphNodes;
-    public List<int> openList = new List<int>();
+    /*public List<int> openList = new List<int>();
     public List<int> closedList = new List<int>();
     public List<int> currentPath = new List<int>();
     public List<int> greedyPaintList = new List<int>();
-    public int currentPathIndex = 0;
+    public int currentPathIndex = 0;*/
     public int currentNodeIndex = 0;
 
     //dirctionary to store parent and child nodes
@@ -24,12 +24,12 @@ public class NavigationAgent : MonoBehaviour {
         graphNodes = GameObject.FindGameObjectWithTag("waypoint graph").GetComponent<WaypointGraph>();
 
         //Initial node index to move to
-        currentPath.Add(currentNodeIndex);
-        print(currentPath.Count);
+        //currentPath.Add(currentNodeIndex);
+        //print(currentPath.Count);
     }
 
     //A-Star Search
-    public List<int> AStarSearch(int start, int goal) {
+    /*public List<int> AStarSearch(int start, int goal) {
 
         //clear everything at start
         openList.Clear();
@@ -79,10 +79,10 @@ public class NavigationAgent : MonoBehaviour {
         }    
 
         return null;
-    }
+    }*/
 
     //ReconstructPath
-    public List<int> ReconstructPath(Dictionary<int, int> CF, int current) { 
+    /*public List<int> ReconstructPath(Dictionary<int, int> CF, int current) { 
         List<int> finalPath = new List<int>();
         finalPath.Add(current);
         while (CF.ContainsKey(current)) { 
@@ -93,10 +93,10 @@ public class NavigationAgent : MonoBehaviour {
         finalPath.Reverse();
 
         return finalPath;
-    }
+    }*/
 
     //Heuristic function
-    public float Heuristic(int a, int b) { 
+    /*public float Heuristic(int a, int b) { 
         return Vector3.Distance(graphNodes.graphNodes[a].transform.position, graphNodes.graphNodes[b].transform.position);
     }
 
@@ -199,5 +199,5 @@ public class NavigationAgent : MonoBehaviour {
         finalPath.Add(end);
 
         return finalPath;
-    }
+    }*/
 }
