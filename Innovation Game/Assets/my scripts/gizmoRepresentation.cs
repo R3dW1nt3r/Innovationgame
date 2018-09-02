@@ -6,7 +6,7 @@ public class gizmoRepresentation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        //OnGizmoDraw();
 	}
 	
 	// Update is called once per frame
@@ -14,9 +14,9 @@ public class gizmoRepresentation : MonoBehaviour {
 		
 	}
 
-    void OnGizmoDraw()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(this.gameObject, Vector3.one);
+        Gizmos.DrawCube(this.gameObject.transform.position, Vector3.one);
     }
 }
