@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class goaltrigger : GameManager {
 
-    GameObject player, monster;
+    //GameObject player, monster;
 
-    Quaternion playerRotation, monsterRotation;
+    //Quaternion playerRotation, monsterRotation;
 
 	// Use this for initialization
 	void Start () {
-        player = GameObject.FindGameObjectWithTag("Player");
+        /*player = GameObject.FindGameObjectWithTag("Player");
         monster = GameObject.FindGameObjectWithTag("Monster");
         playerRotation = player.transform.rotation;
-        monsterRotation = monster.transform.rotation;
+        monsterRotation = monster.transform.rotation;*/
         //playerStart = GameManager.playerStart;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		
-	}
+	}*/
 
     void OnTriggerEnter(Collider other)
     {
