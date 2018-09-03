@@ -10,6 +10,7 @@ public class goaltrigger : GameManager {
 
 	// Use this for initialization
 	void Start () {
+        base.Start();
         /*player = GameObject.FindGameObjectWithTag("Player");
         monster = GameObject.FindGameObjectWithTag("Monster");
         playerRotation = player.transform.rotation;
@@ -31,6 +32,8 @@ public class goaltrigger : GameManager {
             monster.transform.position = monsterStart.position;
             player.transform.rotation = playerRotation;
             monster.transform.rotation = monsterRotation;
+            winInt++;
+            roundInt++;
         }
     }
 }

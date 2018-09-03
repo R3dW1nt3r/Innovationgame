@@ -30,11 +30,13 @@ public class EnemySight : GameManager {
         //Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 50f);
         if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 50f)) {
             if (hit.transform.tag == "Player") {
-                print("hitty");
+                //print("hitty");
                 player.transform.position = playerStart.position;
                 monster.transform.position = monsterStart.position;
                 player.transform.rotation = playerRotation;
                 monster.transform.rotation = monsterRotation;
+                loseInt++;
+                roundInt++;
             }
                 
         }

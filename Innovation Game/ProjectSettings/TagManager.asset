@@ -8,6 +8,8 @@ TagManager:
   - node
   - waypoint graph
   - Monster
+  - playerStart
+  - monsterStart
   layers:
   - Default
   - TransparentFX
