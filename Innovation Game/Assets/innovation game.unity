@@ -5609,8 +5609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4211e4e6d2217ed479674006be614565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStart: {fileID: 0}
-  monsterStart: {fileID: 0}
+  playerStart: {fileID: 1330020677}
+  monsterStart: {fileID: 1529802772}
   win: {fileID: 0}
   lose: {fileID: 0}
   roundNo: {fileID: 0}

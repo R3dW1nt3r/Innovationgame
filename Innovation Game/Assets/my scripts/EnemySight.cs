@@ -14,8 +14,9 @@ public class EnemySight : GameManager {
 
     // Use this for initialization
     void Start () {
-        rigidbody = GetComponent<Rigidbody>();
-        viewCamera = Camera.main;
+        base.Start();
+        //rigidbody = GetComponent<Rigidbody>();
+        //viewCamera = Camera.main;
         //player = GameObject.FindGameObjectWithTag("Player");
         //monster = GameObject.FindGameObjectWithTag("Monster");
         //playerRotation = player.transform.rotation;
