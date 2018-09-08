@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
         win.text = "player won: " + winInt + "/" + totalRounds + " rounds";
         lose.text = "player lose: " + loseInt + "/" + totalRounds + " rounds";
         roundNo.text = "Round number " + roundInt + "/" + totalRounds;
-        print(win.text);
+        //print(win.text);
     }
 	
 	// Update is called once per frame

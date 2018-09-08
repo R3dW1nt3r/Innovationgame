@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1547,7 +1547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &190824957
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1590,7 +1590,7 @@ SphereCollider:
   m_GameObject: {fileID: 190824956}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1802,6 +1802,7 @@ GameObject:
   - component: {fileID: 248332181}
   - component: {fileID: 248332180}
   - component: {fileID: 248332179}
+  - component: {fileID: 248332183}
   m_Layer: 0
   m_Name: inside z wall
   m_TagString: Untagged
@@ -1875,6 +1876,21 @@ Transform:
   m_Father: {fileID: 540450846}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &248332183
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 248332178}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &251015387
 GameObject:
   m_ObjectHideFlags: 0
@@ -5596,8 +5612,13 @@ MonoBehaviour:
   graphNodes: {fileID: 0}
   currentNodeIndex: 5
   target: {fileID: 976629858}
+  player: {fileID: 0}
+  rayStart: {fileID: 0}
+  rayEnd: {fileID: 0}
+  monster: {fileID: 0}
   moveSpeed: 10
   minDistance: 0.4
+  monsterBehaviour: 0
 --- !u!114 &1091906508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5609,22 +5630,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4211e4e6d2217ed479674006be614565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStart: {fileID: 1330020677}
-  monsterStart: {fileID: 1529802772}
-  win: {fileID: 0}
-  lose: {fileID: 0}
-  roundNo: {fileID: 0}
-  fin: {fileID: 0}
-  winInt: 0
-  loseInt: 0
-  roundInt: 0
-  totalRounds: 0
+  graphNodes: {fileID: 0}
+  currentNodeIndex: 0
+  target: {fileID: 0}
   player: {fileID: 0}
-  monster: {fileID: 0}
-  playerRotation: {x: 0, y: 0, z: 0, w: 0}
-  monsterRotation: {x: 0, y: 0, z: 0, w: 0}
   rayStart: {fileID: 190824956}
   rayEnd: {fileID: 1995334120}
+  monster: {fileID: 0}
+  moveSpeed: 10
+  minDistance: 0.4
+  monsterBehaviour: 0
 --- !u!1 &1153228230
 GameObject:
   m_ObjectHideFlags: 0
@@ -10404,7 +10419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &1995334121
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10447,7 +10462,7 @@ SphereCollider:
   m_GameObject: {fileID: 1995334120}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
