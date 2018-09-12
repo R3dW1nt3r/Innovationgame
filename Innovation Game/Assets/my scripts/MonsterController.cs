@@ -16,6 +16,7 @@ public class MonsterController : NavigationAgent {
     //Movement Varaibles
     public float moveSpeed = 10.0f;
     public float minDistance = 0.4f;
+    public float monsterTimer;
 
     public Physics chargeCast;
 
@@ -33,6 +34,7 @@ public class MonsterController : NavigationAgent {
     public void Start () {
         agent = GetComponent<NavMeshAgent>();
         monster = gameObject;
+        monsterTimer = 10f;
         //chargeCast.Raycast() = Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 50f);
 
         //find waypoint graph
@@ -60,7 +62,7 @@ public class MonsterController : NavigationAgent {
                 break;
             case MonsterBehaviours.Charge:
                 Charge();
-                print("hittyu");
+                //print("hittyu");
                 break;
         }
     }
@@ -80,8 +82,8 @@ public class MonsterController : NavigationAgent {
     }
 
     private void Charge() {
-        print("Charge");
+        //print("Charge");
         target = player.transform;
-        agent.speed = 11f;
+        agent.speed = 6f;
     }
 }

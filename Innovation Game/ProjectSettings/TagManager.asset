@@ -10,6 +10,8 @@ TagManager:
   - Monster
   - playerStart
   - monsterStart
+  - null
+  - wall
   layers:
   - Default
   - TransparentFX

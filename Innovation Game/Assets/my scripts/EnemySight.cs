@@ -30,16 +30,23 @@ public class EnemySight : MonsterController {
         Debug.DrawRay(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized);
 
         //this is the charge the player raycast
-        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 50f)) {
+        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit)) {
             if (hit.transform.tag == "Player") {
-                print("CHARGE!@!!!!");
+                //print("CHARGE!@!!!!");
                 this.monsterBehaviour = MonsterBehaviours.Charge;
+                print(hit.distance);
+                monsterTimer = 10f;
             }
-            
+
+            //if (hit.transform.tag == "wall")
+                //print("Searching");
+
         }
         //this is the kill the player raycast
-        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 10f)) {
-            if (hit.transform.tag == "Player") {
+        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 2f))
+        {
+            if (hit.transform.tag == "Player")
+            {
                 player.transform.position = playerStart.position;
                 monster.transform.position = monsterStart.position;
                 player.transform.rotation = playerRotation;
@@ -47,8 +54,14 @@ public class EnemySight : MonsterController {
                 loseInt++;
                 roundInt++;
                 //print("KILL!!!!!!");
-            }
-                
+            } 
+        }
+        //print(hit.transform.tag);
+        if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (hit.distance > 15f)) {
+            print("WTF?!?!?!?");
+            monsterTimer -= Time.deltaTime;
+            if (monsterTimer <= 0)
+                monsterBehaviour = MonsterBehaviours.Patrol;
         }
 
             

@@ -1805,7 +1805,7 @@ GameObject:
   - component: {fileID: 248332183}
   m_Layer: 0
   m_Name: inside z wall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2128,7 +2128,7 @@ GameObject:
   - component: {fileID: 300089502}
   m_Layer: 0
   m_Name: inside thick pillar (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -2510,7 +2510,7 @@ GameObject:
   - component: {fileID: 471809267}
   m_Layer: 0
   m_Name: inside z wall (2)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -2805,7 +2805,7 @@ GameObject:
   - component: {fileID: 531592582}
   m_Layer: 0
   m_Name: room wall side (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -3559,6 +3559,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a253bb4547b1140b01ed31ee6acfae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &707360493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 707360494}
+  - component: {fileID: 707360497}
+  - component: {fileID: 707360496}
+  - component: {fileID: 707360495}
+  m_Layer: 0
+  m_Name: Sphere
+  m_TagString: null
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &707360494
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 707360493}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.79, z: 2.55}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 1091906505}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &707360495
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 707360493}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!135 &707360496
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 707360493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &707360497
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 707360493}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &721721937
 GameObject:
   m_ObjectHideFlags: 0
@@ -3572,7 +3656,7 @@ GameObject:
   - component: {fileID: 721721938}
   m_Layer: 0
   m_Name: inside thick pillar (3)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -3954,7 +4038,7 @@ GameObject:
   - component: {fileID: 817875557}
   m_Layer: 0
   m_Name: room wall side
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -4374,7 +4458,7 @@ GameObject:
   - component: {fileID: 859433451}
   m_Layer: 0
   m_Name: inside x wall (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -4458,7 +4542,7 @@ GameObject:
   - component: {fileID: 859904590}
   m_Layer: 0
   m_Name: inside thin pillar
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -4585,7 +4669,7 @@ GameObject:
   - component: {fileID: 984547950}
   m_Layer: 0
   m_Name: inside thick pillar
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -4781,7 +4865,7 @@ GameObject:
   - component: {fileID: 1021323830}
   m_Layer: 0
   m_Name: inside z wall (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -5568,12 +5652,13 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1091906501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.3, z: -49.4}
+  m_LocalPosition: {x: -2.29, y: 5.3, z: -47.77}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 2104427769}
   - {fileID: 190824960}
   - {fileID: 1995334124}
+  - {fileID: 707360494}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5586,7 +5671,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -5618,6 +5703,7 @@ MonoBehaviour:
   monster: {fileID: 0}
   moveSpeed: 10
   minDistance: 0.4
+  monsterTimer: 0
   monsterBehaviour: 0
 --- !u!114 &1091906508
 MonoBehaviour:
@@ -5639,6 +5725,7 @@ MonoBehaviour:
   monster: {fileID: 0}
   moveSpeed: 10
   minDistance: 0.4
+  monsterTimer: 0
   monsterBehaviour: 0
 --- !u!1 &1153228230
 GameObject:
@@ -7157,7 +7244,7 @@ GameObject:
   - component: {fileID: 1411896440}
   m_Layer: 0
   m_Name: room wall front
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -8271,7 +8358,7 @@ GameObject:
   - component: {fileID: 1624746306}
   m_Layer: 0
   m_Name: room wall front (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -9827,7 +9914,7 @@ GameObject:
   - component: {fileID: 1913610771}
   m_Layer: 0
   m_Name: inside thick pillar (2)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -9911,7 +9998,7 @@ GameObject:
   - component: {fileID: 1917313305}
   m_Layer: 0
   m_Name: inside x wall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -10415,7 +10502,7 @@ GameObject:
   - component: {fileID: 1995334121}
   m_Layer: 0
   m_Name: RayEnd
-  m_TagString: Untagged
+  m_TagString: null
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
