@@ -7,7 +7,7 @@ public class MonsterController : NavigationAgent {
 
     public Transform target;
     NavMeshAgent agent;
-    Transform playerStart, monsterStart;
+    Transform playerStart, monsterStart,targetTransform;
     //player reference
     public PlayerController player;
 
@@ -74,10 +74,33 @@ public class MonsterController : NavigationAgent {
         {
             //print("hit");
             //randomly select new waypoint
-            int randomNode = Random.Range(0, graphNodes.graphNodes.Length);
+            //int randomNode = Random.Range(0, graphNodes.graphNodes.Length);
 
-            target = graphNodes.graphNodes[randomNode].transform;
+            //Hardcoded stuff needs to be redone
+            int randomNode;
+            //Transform targetTransform;
+            int randomNodeSelector = Random.Range(0,99);
+            int randomNodepositionfinder;
+            if (randomNodeSelector <= 39) //player locations
+            {
+                randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().playerLocations.Count);
+                targetTransform = gameObject.GetComponent<QuerySearch>().playerLocations[randomNodepositionfinder].transform;
+            } else if (randomNodeSelector <= 79) //nodes close to player locations
+            {
+                randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesClosetoPlayerLocations.Count);
+                targetTransform = gameObject.GetComponent<QuerySearch>().nodesClosetoPlayerLocations[randomNodepositionfinder].transform;
+            } else if (randomNodeSelector <= 94) //nodes near to player locations
+            {
+                randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations.Count);
+                target = gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations[randomNodepositionfinder].transform;
+            } else if (randomNodeSelector <= 99) {//nodes not near to player locations
+                randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Count);
+                targetTransform = gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations[randomNodepositionfinder].transform;
+            }
+
+            // target = graphNodes.graphNodes[randomNode].transform;
             //target = player.transform;
+            target = targetTransform;
         }
     }
 
