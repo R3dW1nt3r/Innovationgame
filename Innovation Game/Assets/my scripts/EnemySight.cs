@@ -58,10 +58,27 @@ public class EnemySight : MonsterController {
         }
         //print(hit.transform.tag);
         if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (hit.distance > 15f)) {
+            //player location dropping
+            playerSpottedLocation = player.transform;
             print("WTF?!?!?!?");
             monsterTimer -= Time.deltaTime;
+            //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
             if (monsterTimer <= 0)
+            {
+                //this will skip a node. to be redone //maybe not look into it
+                for (int i = 0; i < gameObject.GetComponent<QuerySearch>().graphNodes.Length; i++)
+                {
+                    if ((gameObject.GetComponent<QuerySearch>().playerLocation != null) && (Vector3.Distance(gameObject.GetComponent<QuerySearch>().graphNodes[i].transform.position, playerSpottedLocation.position) < Vector3.Distance(gameObject.GetComponent<QuerySearch>().playerLocation.transform.position, playerSpottedLocation.position)))
+                    {
+                        gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().graphNodes[i];
+                    } else
+                        gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().graphNodes[i];
+                }
+                gameObject.GetComponent<QuerySearch>().playerLocations.Add(gameObject.GetComponent<QuerySearch>().playerLocation);
+                gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Remove(gameObject.GetComponent<QuerySearch>().playerLocation);
+                gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
                 monsterBehaviour = MonsterBehaviours.Patrol;
+            }
         }
 
             

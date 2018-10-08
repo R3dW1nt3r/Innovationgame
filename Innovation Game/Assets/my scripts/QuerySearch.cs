@@ -5,20 +5,52 @@ using UnityEngine;
 public class QuerySearch : MonoBehaviour {
 
     public List<GameObject> playerLocations = new List<GameObject>();
+    public GameObject playerLocation = null;
     public List<GameObject> nodesClosetoPlayerLocations = new List<GameObject>();
     public List<GameObject> nodesNeartoPlayerLocations = new List<GameObject>();
     public List<GameObject> nodesNotNeartoPlayerLocations = new List<GameObject>();
 
+    //need to rename this
+    public GameObject[] graphNodes;
+
 	// Use this for initialization
 	void Start () {
-        HardCodeQuerySearch();
-        
+        //grabs waypoint graph
+        graphNodes = GameObject.Find("WaypointGraph").GetComponent<WaypointGraph>().graphNodes;
+
+        //HardCodeQuerySearch();
+        //sets all locations in the query search 
+        for (int i = 0; i < graphNodes.Length; i++) {
+            nodesNotNeartoPlayerLocations.Add(graphNodes[i]);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    //when a new player location is added search through all lists and correctly move graphnodes between lists
+    public void EnvironementalQuerySearch() {
+        for (int i = 0; i < playerLocations.Count; i++) {
+            nodesClosetoPlayerLocations.Remove(playerLocations[i]);
+            nodesNeartoPlayerLocations.Remove(playerLocations[i]);
+            nodesNotNeartoPlayerLocations.Remove(playerLocations[i]);
+            for (int j = 0; j < graphNodes.Length; j++) {
+                if ((Vector3.Distance(playerLocations[i].transform.position, graphNodes[j].transform.position) < 5 /*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(graphNodes[j]) != true))
+                {
+                    nodesClosetoPlayerLocations.Add(graphNodes[j]);
+                    nodesNeartoPlayerLocations.Remove(graphNodes[j]);
+                    nodesNotNeartoPlayerLocations.Remove(graphNodes[j]);
+                } else if ((Vector3.Distance(playerLocations[i].transform.position, graphNodes[j].transform.position) < 10 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(graphNodes[j]) != true))
+                {
+                    nodesNeartoPlayerLocations.Add(graphNodes[j]);
+                    nodesNotNeartoPlayerLocations.Remove(graphNodes[j]);
+                } else
+                    Debug.Log("May be a problem with " + graphNodes[j].name);
+            }
+        }
+    }
 
     public void HardCodeQuerySearch() {//only for vid
         //player locations

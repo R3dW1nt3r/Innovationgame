@@ -10,7 +10,7 @@ public class MonsterController : NavigationAgent {
     Transform playerStart, monsterStart,targetTransform;
     //player reference
     public PlayerController player;
-
+    public Transform playerSpottedLocation = null;
     public GameObject rayStart, rayEnd, monster;
 
     //Movement Varaibles
