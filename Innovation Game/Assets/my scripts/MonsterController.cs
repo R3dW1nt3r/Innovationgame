@@ -23,6 +23,9 @@ public class MonsterController : NavigationAgent {
 
     public Physics chargeCast;
 
+    //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
+    public int fixertest = 0;
+
     //monster FSMs
     public enum MonsterBehaviours {
         Patrol,
@@ -77,9 +80,16 @@ public class MonsterController : NavigationAgent {
         locationFound = false;
         //target = randomPos;
         //print(Vector3.Distance(transform.position, target.position));
+        int randomness = Random.Range(0, 70);
+
+        //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
+        if (fixertest == 1) {
+            target = gameObject.GetComponent<EnemySight>().transform;
+            fixertest = 0;
+        }
         if (Vector3.Distance(transform.position, target.position) <= minDistance)
         {
-            //print("hit");
+            print("hit");
             //randomly select new waypoint
             //int randomNode = Random.Range(0, graphNodes.graphNodes.Length);
 

@@ -33,38 +33,41 @@ public class QuerySearch : EnemySight {
     //when a new player location is added search through all lists and correctly move graphnodes between lists
     public void EnvironementalQuerySearch() {
         if (locationFound == false) {
-            print("initialhit");
+            //print("initialhit");
             
             SearchForPlayerLocation(GameObject.Find("monster").GetComponent<EnemySight>().playerSpottedLocation);
-            print("hit to prove it doesn't stop at search for playerlocation");
+            //print("hit to prove it doesn't stop at search for playerlocation");
             for (int i = 0; i < playerLocations.Count; i++)
             {
-                print("hitfirstloop");
+                //print("hitfirstloop");
                 nodesClosetoPlayerLocations.Remove(playerLocations[i]);
                 nodesNeartoPlayerLocations.Remove(playerLocations[i]);
                 nodesNotNeartoPlayerLocations.Remove(playerLocations[i]);
                 for (int j = 0; j < queryGraphNodes.Length; j++)
                 {
-                    print("hittyhit");
-                    if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) <  1000/*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(queryGraphNodes[j]) != true))
+                    //print("hittyhit");
+                    if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) <  20/*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(queryGraphNodes[j]) != true))
                     {
                         nodesClosetoPlayerLocations.Add(queryGraphNodes[j]);
                         nodesNeartoPlayerLocations.Remove(queryGraphNodes[j]);
                         nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j]);
-                    } else if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) < 10000 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(queryGraphNodes[j]) != true))
+                    } 
+                    
+                    else if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) < 50 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(queryGraphNodes[j]) != true))
                     {
                         nodesNeartoPlayerLocations.Add(queryGraphNodes[j]);
                         nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j]);
-                    } else
-                        Debug.Log("May be a problem with " + queryGraphNodes[j].name);
+                    } 
+                    //else
+                        //Debug.Log("May be a problem with " + queryGraphNodes[j].name); //I don't think so these should just be nodes that are too far away
                 }
             }
             locationFound = true;
         }
 
-        print("playerlocations length = "+playerLocations.Count);
-        print("nodesclosetoplayerlocations length  = "+ nodesClosetoPlayerLocations.Count);
-        print("nodesneartoplayerlocations length = "+ nodesNeartoPlayerLocations.Count);
+        //print("playerlocations length = "+playerLocations.Count);
+        //print("nodesclosetoplayerlocations length  = "+ nodesClosetoPlayerLocations.Count);
+        //print("nodesneartoplayerlocations length = "+ nodesNeartoPlayerLocations.Count);
 
         //print statements at end
         /*for (int i = 0; i < playerLocations.Count; i++) {
@@ -79,6 +82,7 @@ public class QuerySearch : EnemySight {
             print("Node " + i + " near to player locations = " + nodesNeartoPlayerLocations[i].name);
         }*/
         monsterBehaviour = MonsterBehaviours.Patrol;
+        gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
     }
 
 

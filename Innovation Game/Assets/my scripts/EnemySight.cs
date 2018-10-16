@@ -74,7 +74,14 @@ public class EnemySight : MonsterController {
             {
                 //PlayerLocations();
                 gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
-                
+                gameObject.GetComponent<MonsterController>().target = transform;
+                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
+                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<EnemySight>().transform;
+                monsterBehaviour = MonsterBehaviours.Patrol;
+                gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
+                gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
+                //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
+                fixertest = 1;
             }
 
             /*if (hit.distance > 7f)
