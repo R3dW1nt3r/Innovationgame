@@ -12,11 +12,14 @@ public class MonsterController : NavigationAgent {
     public PlayerController player;
     public Transform playerSpottedLocation = null;
     public GameObject rayStart, rayEnd, monster;
-
+    public Transform randomPos;
     //Movement Varaibles
     public float moveSpeed = 10.0f;
     public float minDistance = 0.4f;
     public float monsterTimer;
+
+    //bools
+    public bool locationFound = false;
 
     public Physics chargeCast;
 
@@ -68,7 +71,11 @@ public class MonsterController : NavigationAgent {
     }
 
     private void Patrol() {
+        //print("hitpatrol");
         agent.speed = 3.5f;
+        monsterTimer = 5;
+        locationFound = false;
+        //target = randomPos;
         //print(Vector3.Distance(transform.position, target.position));
         if (Vector3.Distance(transform.position, target.position) <= minDistance)
         {
@@ -77,7 +84,7 @@ public class MonsterController : NavigationAgent {
             //int randomNode = Random.Range(0, graphNodes.graphNodes.Length);
 
             //Hardcoded stuff needs to be redone
-            int randomNode;
+            //randomNode;
             //Transform targetTransform;
             int randomNodeSelector = Random.Range(0,99);
             int randomNodepositionfinder;
@@ -105,6 +112,7 @@ public class MonsterController : NavigationAgent {
     }
 
     private void Charge() {
+        randomPos = gameObject.transform;
         //print("Charge");
         target = player.transform;
         agent.speed = 6f;

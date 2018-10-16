@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuerySearch : MonoBehaviour {
+public class QuerySearch : EnemySight {
 
     public List<GameObject> playerLocations = new List<GameObject>();
     public GameObject playerLocation = null;
@@ -11,126 +11,92 @@ public class QuerySearch : MonoBehaviour {
     public List<GameObject> nodesNotNeartoPlayerLocations = new List<GameObject>();
 
     //need to rename this
-    public GameObject[] graphNodes;
+    public GameObject[] queryGraphNodes;
 
 	// Use this for initialization
 	void Start () {
         //grabs waypoint graph
-        graphNodes = GameObject.Find("WaypointGraph").GetComponent<WaypointGraph>().graphNodes;
-
+        //queryGraphNodes = GameObject.FindObjectWithTag("waypoint graph").GetComponent<WaypointGraph>().graphNodes;
+        queryGraphNodes = GameObject.FindGameObjectWithTag("waypoint graph").GetComponent<WaypointGraph>().graphNodes;
         //HardCodeQuerySearch();
         //sets all locations in the query search 
-        for (int i = 0; i < graphNodes.Length; i++) {
-            nodesNotNeartoPlayerLocations.Add(graphNodes[i]);
+        for (int i = 0; i < queryGraphNodes.Length; i++) {
+            nodesNotNeartoPlayerLocations.Add(queryGraphNodes[i]);
         }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        base.Start();
 	}
 
     //when a new player location is added search through all lists and correctly move graphnodes between lists
     public void EnvironementalQuerySearch() {
-        for (int i = 0; i < playerLocations.Count; i++) {
-            nodesClosetoPlayerLocations.Remove(playerLocations[i]);
-            nodesNeartoPlayerLocations.Remove(playerLocations[i]);
-            nodesNotNeartoPlayerLocations.Remove(playerLocations[i]);
-            for (int j = 0; j < graphNodes.Length; j++) {
-                if ((Vector3.Distance(playerLocations[i].transform.position, graphNodes[j].transform.position) < 5 /*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(graphNodes[j]) != true))
+        if (locationFound == false) {
+            print("initialhit");
+            
+            SearchForPlayerLocation(GameObject.Find("monster").GetComponent<EnemySight>().playerSpottedLocation);
+            print("hit to prove it doesn't stop at search for playerlocation");
+            for (int i = 0; i < playerLocations.Count; i++)
+            {
+                print("hitfirstloop");
+                nodesClosetoPlayerLocations.Remove(playerLocations[i]);
+                nodesNeartoPlayerLocations.Remove(playerLocations[i]);
+                nodesNotNeartoPlayerLocations.Remove(playerLocations[i]);
+                for (int j = 0; j < queryGraphNodes.Length; j++)
                 {
-                    nodesClosetoPlayerLocations.Add(graphNodes[j]);
-                    nodesNeartoPlayerLocations.Remove(graphNodes[j]);
-                    nodesNotNeartoPlayerLocations.Remove(graphNodes[j]);
-                } else if ((Vector3.Distance(playerLocations[i].transform.position, graphNodes[j].transform.position) < 10 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(graphNodes[j]) != true))
-                {
-                    nodesNeartoPlayerLocations.Add(graphNodes[j]);
-                    nodesNotNeartoPlayerLocations.Remove(graphNodes[j]);
-                } else
-                    Debug.Log("May be a problem with " + graphNodes[j].name);
+                    print("hittyhit");
+                    if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) <  1000/*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(queryGraphNodes[j]) != true))
+                    {
+                        nodesClosetoPlayerLocations.Add(queryGraphNodes[j]);
+                        nodesNeartoPlayerLocations.Remove(queryGraphNodes[j]);
+                        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j]);
+                    } else if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) < 10000 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(queryGraphNodes[j]) != true))
+                    {
+                        nodesNeartoPlayerLocations.Add(queryGraphNodes[j]);
+                        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j]);
+                    } else
+                        Debug.Log("May be a problem with " + queryGraphNodes[j].name);
+                }
             }
+            locationFound = true;
         }
+
+        print("playerlocations length = "+playerLocations.Count);
+        print("nodesclosetoplayerlocations length  = "+ nodesClosetoPlayerLocations.Count);
+        print("nodesneartoplayerlocations length = "+ nodesNeartoPlayerLocations.Count);
+
+        //print statements at end
+        /*for (int i = 0; i < playerLocations.Count; i++) {
+            print("Player location"+i+" = "+playerLocations[i].name);
+        }
+
+        for (int i = 0; i < nodesClosetoPlayerLocations.Count; i++) {
+            print("Node "+i+" close to player locations = " + nodesClosetoPlayerLocations[i].name);
+        }
+
+        for (int i = 0; i < nodesNeartoPlayerLocations.Count; i++) {
+            print("Node " + i + " near to player locations = " + nodesNeartoPlayerLocations[i].name);
+        }*/
+        monsterBehaviour = MonsterBehaviours.Patrol;
     }
 
-    public void HardCodeQuerySearch() {//only for vid
-        //player locations
-        playerLocations.Add(GameObject.Find("node 0"));                 
-        playerLocations.Add(GameObject.Find("node 6"));                 
 
-        //close to player locations
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 55"));    //55
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 70"));    //70
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 32"));    
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 35"));    
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 2"));     
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 20"));    
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 5"));     
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 4"));     
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 10"));    
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 11"));    
-        nodesClosetoPlayerLocations.Add(GameObject.Find("node 7"));     
-
-        //near to player locations
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 56"));     //56
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 61"));     //61
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 38"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 50"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 1"));      
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 14"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 8"));      
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 12"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 15"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 3"));      
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 27"));     
-        nodesNeartoPlayerLocations.Add(GameObject.Find("node 24"));     
-
-        //not near to player locations  //0,1,2,3,4,5,6,7,8,10,11,12,14,15,20,24,27,32,35,38,50,55,56,61,70
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 9"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 13"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 16"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 17"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 18"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 19"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 21"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 22"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 23"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 25"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 26"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 28"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 29"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 30"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 31"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 33"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 34"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 36"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 37"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 39"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 40"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 41"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 42"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 43"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 44"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 45"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 46"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 47"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 48"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 49"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 51"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 52"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 53"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 54"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 57"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 58"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 59"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 60"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 62"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 63"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 64"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 65"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 66"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 67"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 68"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 69"));
-        nodesNotNeartoPlayerLocations.Add(GameObject.Find("node 71"));
+    public GameObject SearchForPlayerLocation(Transform playerSpottedLocation) {
+        print("hitinside");
+        //this will skip a node. to be redone //maybe not look into it
+        for (int i = 0; i < queryGraphNodes.Length; i++)
+        {
+            if ((playerLocation != null) && (Vector3.Distance(queryGraphNodes[i].transform.position, playerSpottedLocation.position) 
+                < Vector3.Distance(playerLocation.transform.position, playerSpottedLocation.position)))
+            {
+                playerLocation = queryGraphNodes[i];
+            } else
+                playerLocation = queryGraphNodes[i];
+        }
+        playerLocations.Add(playerLocation);
+        nodesNotNeartoPlayerLocations.Remove(playerLocation);
+        return playerLocation;
     }
+
 }
