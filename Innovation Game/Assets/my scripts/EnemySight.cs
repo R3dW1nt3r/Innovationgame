@@ -58,10 +58,11 @@ public class EnemySight : MonsterController {
             } 
         }
         //print(hit.transform.tag);
-        if ((this.monsterBehaviour == MonsterBehaviours.Charge)/* && (hit.distance > 10f)*/) {
-
+        if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 15f))) {//use vector3 distance instead of hit.distance calculations for hit point and
+                                                                                              //worst case scenario if target.hit = player else target = null (have different target for nodes)
+                                                                                              //use forward vector for raycast
             //print("hit");
-
+            //readd 
             //print("hittytytytytyt");
             //player location dropping
             playerSpottedLocation = player.transform;
@@ -74,9 +75,9 @@ public class EnemySight : MonsterController {
             {
                 //PlayerLocations();
                 gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
-                gameObject.GetComponent<MonsterController>().target = transform;
-                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
-                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<EnemySight>().transform;
+                gameObject.GetComponent<MonsterController>().attackTarget = null;
+                gameObject.GetComponent<MonsterController>().attackTarget = null;
+                gameObject.GetComponent<MonsterController>().attackTarget = null;
                 monsterBehaviour = MonsterBehaviours.Patrol;
                 gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
                 gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
