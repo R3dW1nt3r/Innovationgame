@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,14 +16,14 @@ public class goaltrigger : GameManager {
         playerRotation = player.transform.rotation;
         monsterRotation = monster.transform.rotation;*/
         //playerStart = GameManager.playerStart;
-	}
+	//}
 	
 	// Update is called once per frame
 	/*void Update () {
 		
 	}*/
 
-    void OnTriggerEnter(Collider other)
+   /* void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -34,6 +34,38 @@ public class goaltrigger : GameManager {
             monster.transform.rotation = monsterRotation;
             winInt++;
             roundInt++;
+        }
+    }
+}*/
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class goaltrigger : GameManager
+{
+
+    //GameObject player, monster;
+    GameObject gameManager;
+    //Quaternion playerRotation, monsterRotation;
+
+    // Use this for initialization
+    void Start()
+    {
+        base.Start();
+        gameManager = GameObject.Find("Game Manager");
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            print("goal reached");
+            player.transform.position = playerStart.position;
+            monster.transform.position = monsterStart.position;
+            player.transform.rotation = playerRotation;
+            monster.transform.rotation = monsterRotation;
+            gameManager.GetComponent<GameManager>().winInt++;
+            gameManager.GetComponent<GameManager>().roundInt++;
         }
     }
 }

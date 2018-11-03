@@ -8,11 +8,6 @@ public class gizmoRepresentation : MonoBehaviour {
 	void Start () {
         //OnGizmoDraw();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     void OnDrawGizmos()
     {

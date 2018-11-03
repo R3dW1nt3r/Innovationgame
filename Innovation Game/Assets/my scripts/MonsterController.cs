@@ -18,7 +18,7 @@ public class MonsterController : NavigationAgent {
     public float moveSpeed = 10.0f;
     public float minDistance = 0.4f;
     public float monsterTimer;
-
+    public float distance;
     //bools
     public bool locationFound = false;
 
@@ -70,6 +70,9 @@ public class MonsterController : NavigationAgent {
                 //print("hittyu");
                 break;
         }
+
+        distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
+        gameObject.GetComponent<EnemySight>().target = target;
     }
 
     private void Patrol() {
@@ -85,7 +88,7 @@ public class MonsterController : NavigationAgent {
 
         //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
         if (fixertest == 1) {
-            target = gameObject.GetComponent<EnemySight>().target;
+            gameObject.GetComponent<EnemySight>().target = target;
             fixertest = 0;
         }
         if (Vector3.Distance(transform.position, target.position) <= minDistance)
@@ -93,19 +96,19 @@ public class MonsterController : NavigationAgent {
             print("hit");
             int randomNodeSelector = Random.Range(0,99);
             int randomNodepositionfinder;
-            if (randomNodeSelector <= 39) //player locations
+            if ((randomNodeSelector <= 39) && (gameObject.GetComponent<QuerySearch>().playerLocations.Count > 0)) //player locations
             {
                 randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().playerLocations.Count);
                 targetTransform = gameObject.GetComponent<QuerySearch>().playerLocations[randomNodepositionfinder].transform;
-            } else if (randomNodeSelector <= 79) //nodes close to player locations
+            } else if ((randomNodeSelector <= 79) && (gameObject.GetComponent<QuerySearch>().nodesClosetoPlayerLocations.Count > 0)) //nodes close to player locations
             {
                 randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesClosetoPlayerLocations.Count);
                 targetTransform = gameObject.GetComponent<QuerySearch>().nodesClosetoPlayerLocations[randomNodepositionfinder].transform;
-            } else if (randomNodeSelector <= 94) //nodes near to player locations
+            } else if ((randomNodeSelector <= 94) && (gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations.Count > 0)) //nodes near to player locations
             {
                 randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations.Count);
-                target = gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations[randomNodepositionfinder].transform;
-            } else if (randomNodeSelector <= 99) {//nodes not near to player locations
+                targetTransform = gameObject.GetComponent<QuerySearch>().nodesNeartoPlayerLocations[randomNodepositionfinder].transform;
+            } else if ((randomNodeSelector <= 99)  && (gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Count > 0)) {//nodes not near to player locations
                 randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Count);
                 targetTransform = gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations[randomNodepositionfinder].transform;
             }

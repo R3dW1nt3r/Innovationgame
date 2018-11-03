@@ -21,10 +21,10 @@ public class LinkedNodes : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		//Draw lines between each connected waypoint
 		foreach(GameObject linkedNode in linkedNodeObjects) {
 			Debug.DrawLine (transform.position, linkedNode.transform.position,  Color.green);
 		}
-	}
+	}*/
 }

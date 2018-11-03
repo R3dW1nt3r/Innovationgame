@@ -20,8 +20,8 @@ public class EnemySight : MonsterController {
         monsterStart = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterStart;
         playerRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().playerRotation;
         monsterRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterRotation;
-        loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
-        roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
+        //loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
+        //roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
 
         enemySightPlayerSpotted = false;
     }
@@ -56,11 +56,11 @@ public class EnemySight : MonsterController {
                 monster.transform.position = monsterStart.position;
                 player.transform.rotation = playerRotation;
                 monster.transform.rotation = monsterRotation;
-                loseInt++;
-                roundInt++;
+                GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt++;
+                GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt++;
             } 
         }
-        if ((this.monsterBehaviour == MonsterBehaviours.Charge)/* && (hit.distance > 10f)*/) {
+        if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (Vector3.Distance(gameObject.transform.position, player.transform.position) > 30f)) {
             monsterTimer = monsterTimer - Time.deltaTime;
 
             //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
