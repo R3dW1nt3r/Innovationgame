@@ -5842,12 +5842,19 @@ MonoBehaviour:
   currentNodeIndex: 5
   target: {fileID: 976629858}
   player: {fileID: 0}
+  spottedPlayer: 0
+  playerSpottedLocation: {fileID: 0}
   rayStart: {fileID: 0}
   rayEnd: {fileID: 0}
   monster: {fileID: 0}
+  prefabObject: {fileID: 1763614966264264, guid: 8335fcf9efefc9a40b2510819c6a1228,
+    type: 2}
+  randomPos: {fileID: 0}
   moveSpeed: 10
   minDistance: 0.4
   monsterTimer: 0
+  locationFound: 0
+  fixertest: 0
   monsterBehaviour: 0
 --- !u!114 &1091906508
 MonoBehaviour:
@@ -5864,12 +5871,19 @@ MonoBehaviour:
   currentNodeIndex: 0
   target: {fileID: 0}
   player: {fileID: 0}
+  spottedPlayer: 0
+  playerSpottedLocation: {fileID: 0}
   rayStart: {fileID: 190824956}
   rayEnd: {fileID: 1995334120}
   monster: {fileID: 0}
+  prefabObject: {fileID: 1763614966264264, guid: 8335fcf9efefc9a40b2510819c6a1228,
+    type: 2}
+  randomPos: {fileID: 0}
   moveSpeed: 10
   minDistance: 0.4
   monsterTimer: 0
+  locationFound: 0
+  fixertest: 0
   monsterBehaviour: 0
 --- !u!114 &1091906509
 MonoBehaviour:
@@ -5882,10 +5896,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f02bedda625a849b31189186bac4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  graphNodes: {fileID: 0}
+  currentNodeIndex: 0
+  target: {fileID: 0}
+  player: {fileID: 0}
+  spottedPlayer: 0
+  playerSpottedLocation: {fileID: 0}
+  rayStart: {fileID: 0}
+  rayEnd: {fileID: 0}
+  monster: {fileID: 0}
+  prefabObject: {fileID: 1763614966264264, guid: 8335fcf9efefc9a40b2510819c6a1228,
+    type: 2}
+  randomPos: {fileID: 0}
+  moveSpeed: 10
+  minDistance: 0.4
+  monsterTimer: 0
+  locationFound: 0
+  fixertest: 0
+  monsterBehaviour: 0
   playerLocations: []
+  playerLocation: {fileID: 0}
   nodesClosetoPlayerLocations: []
   nodesNeartoPlayerLocations: []
   nodesNotNeartoPlayerLocations: []
+  queryGraphNodes: []
 --- !u!1 &1153228230
 GameObject:
   m_ObjectHideFlags: 0

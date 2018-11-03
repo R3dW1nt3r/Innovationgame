@@ -10,8 +10,9 @@ public class MonsterController : NavigationAgent {
     Transform playerStart, monsterStart,targetTransform;
     //player reference
     public PlayerController player;
+    public bool spottedPlayer = false;
     public Transform playerSpottedLocation = null;
-    public GameObject rayStart, rayEnd, monster;
+    public GameObject rayStart, rayEnd, monster, prefabObject;
     public Transform randomPos;
     //Movement Varaibles
     public float moveSpeed = 10.0f;
@@ -41,7 +42,6 @@ public class MonsterController : NavigationAgent {
         agent = GetComponent<NavMeshAgent>();
         monster = gameObject;
         monsterTimer = 10f;
-        //chargeCast.Raycast() = Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 50f);
 
         //find waypoint graph
         graphNodes = GameObject.FindGameObjectWithTag("waypoint graph").GetComponent<WaypointGraph>();
@@ -59,7 +59,6 @@ public class MonsterController : NavigationAgent {
 	// Update is called once per frame
 	public void Update () {
         agent.SetDestination(target.position);
-
         //FSMs switching
         switch (monsterBehaviour) {
             case MonsterBehaviours.Patrol:
@@ -74,12 +73,14 @@ public class MonsterController : NavigationAgent {
     }
 
     private void Patrol() {
-        //print("hitpatrol");
         agent.speed = 3.5f;
         monsterTimer = 5;
+        playerSpottedLocation = null;
+        gameObject.GetComponent<QuerySearch>().playerSpottedLocation = null;
+        gameObject.GetComponent<EnemySight>().playerSpottedLocation = null;
         locationFound = false;
-        //target = randomPos;
-        //print(Vector3.Distance(transform.position, target.position));
+        gameObject.GetComponent<QuerySearch>().locationFound = false;
+        gameObject.GetComponent<EnemySight>().locationFound = false;
         int randomness = Random.Range(0, 70);
 
         //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
@@ -90,12 +91,6 @@ public class MonsterController : NavigationAgent {
         if (Vector3.Distance(transform.position, target.position) <= minDistance)
         {
             print("hit");
-            //randomly select new waypoint
-            //int randomNode = Random.Range(0, graphNodes.graphNodes.Length);
-
-            //Hardcoded stuff needs to be redone
-            //randomNode;
-            //Transform targetTransform;
             int randomNodeSelector = Random.Range(0,99);
             int randomNodepositionfinder;
             if (randomNodeSelector <= 39) //player locations
@@ -114,16 +109,12 @@ public class MonsterController : NavigationAgent {
                 randomNodepositionfinder = Random.Range(0, gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Count);
                 targetTransform = gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations[randomNodepositionfinder].transform;
             }
-
-            // target = graphNodes.graphNodes[randomNode].transform;
-            //target = player.transform;
             target = targetTransform;
         }
     }
 
     private void Charge() {
         randomPos = gameObject.transform;
-        //print("Charge");
         target = player.transform;
         agent.speed = 6f;
     }

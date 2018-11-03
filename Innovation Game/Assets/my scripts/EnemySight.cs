@@ -5,12 +5,11 @@ using UnityEngine;
 public class EnemySight : MonsterController {
 
     Rigidbody rigidbody;
+    
     Camera viewCamera;
     Transform playerStart, monsterStart;
     Quaternion playerRotation, monsterRotation;
     int loseInt, roundInt;
-    //public Quaternion playerRotation, monsterRotation;
-    //Transform playerStart, monsterStart;
 
     // Use this for initialization
     void Start () {
@@ -31,17 +30,14 @@ public class EnemySight : MonsterController {
         //this is the charge the player raycast
         if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit)) {
             if (hit.transform.tag == "Player") {
-                //print("CHARGE!@!!!!");
-                this.monsterBehaviour = MonsterBehaviours.Charge;
-                //print(hit.distance);
-                //monsterTimer = 10f;
-            }
 
-            //if (hit.transform.tag == "wall")
-            //print("Searching");
-            //print("timer is "+monsterTimer);
-            //print("behaviour is "+monsterBehaviour);
-            //print(hit.distance);
+                //create an empty object for the player spotted location
+                Instantiate(prefabObject, player.transform.position, player.transform.rotation);
+
+                this.monsterBehaviour = MonsterBehaviours.Charge;
+                gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterBehaviours.Charge;
+                gameObject.GetComponent<QuerySearch>().monsterBehaviour = MonsterBehaviours.Charge;
+            }
         }
         //this is the kill the player raycast
         if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 2f))
@@ -54,25 +50,14 @@ public class EnemySight : MonsterController {
                 monster.transform.rotation = monsterRotation;
                 loseInt++;
                 roundInt++;
-                //print("KILL!!!!!!");
             } 
         }
-        //print(hit.transform.tag);
         if ((this.monsterBehaviour == MonsterBehaviours.Charge)/* && (hit.distance > 10f)*/) {
-
-            //print("hit");
-
-            //print("hittytytytytyt");
-            //player location dropping
-            playerSpottedLocation = player.transform;
-            //print("WTF?!?!?!?");
             monsterTimer = monsterTimer - Time.deltaTime;
-            //print("timer is " + monsterTimer);
 
             //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
             if (monsterTimer <= 0)
             {
-                //PlayerLocations();
                 gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
                 gameObject.GetComponent<MonsterController>().target = transform;
                 gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
@@ -83,30 +68,6 @@ public class EnemySight : MonsterController {
                 //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
                 fixertest = 1;
             }
-
-            /*if (hit.distance > 7f)
-            {
-                print("hittytytytytyt");
-                //player location dropping
-                playerSpottedLocation = player.transform;
-                print("WTF?!?!?!?");
-                monsterTimer = monsterTimer - Time.deltaTime;
-                print("timer is " + monsterTimer);
-
-                //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
-                if (monsterTimer <= 0)
-                {
-                    PlayerLocations();
-                }
-
-                if (locationFound == true) {
-                    print("location hit");
-                    gameObject.GetComponent<QuerySearch>().playerLocations.Add(gameObject.GetComponent<QuerySearch>().playerLocation);
-                    gameObject.GetComponent<QuerySearch>().nodesNotNeartoPlayerLocations.Remove(gameObject.GetComponent<QuerySearch>().playerLocation);
-                    gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
-                    monsterBehaviour = MonsterBehaviours.Patrol;
-                }
-            }*/
         }  
     }
 
@@ -119,13 +80,26 @@ public class EnemySight : MonsterController {
             (Vector3.Distance(gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform.position, playerSpottedLocation.position) <
             Vector3.Distance(gameObject.GetComponent<QuerySearch>().playerLocation.transform.position, playerSpottedLocation.position)))
             {
-                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i];
+                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform;
             } else
-                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i];
+                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform;
         }
 
         locationFound = true;
         return locationFound;
     }
 
+    public void SpotPlayer(Transform playerLocation) {
+        if (spottedPlayer == false)
+        {
+            playerSpottedLocation = playerLocation;
+            print(playerLocation);
+            gameObject.GetComponent<QuerySearch>().playerSpottedLocation = playerLocation;
+            print(playerLocation);
+            gameObject.GetComponent<MonsterController>().playerSpottedLocation = playerLocation;
+            print(playerLocation);
+            print(playerLocation);
+            spottedPlayer = true;
+        }
+    }
 }
