@@ -85,7 +85,7 @@ public class MonsterController : NavigationAgent {
 
         //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
         if (fixertest == 1) {
-            target = gameObject.GetComponent<EnemySight>().transform;
+            target = gameObject.GetComponent<EnemySight>().target;
             fixertest = 0;
         }
         if (Vector3.Distance(transform.position, target.position) <= minDistance)

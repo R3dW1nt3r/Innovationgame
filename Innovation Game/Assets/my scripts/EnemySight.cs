@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class EnemySight : MonsterController {
 
+    public bool enemySightPlayerSpotted;
+
     Rigidbody rigidbody;
-    
+    public List<GameObject> enemySightPlayerFoundLocations = new List<GameObject>();
     Camera viewCamera;
     Transform playerStart, monsterStart;
     Quaternion playerRotation, monsterRotation;
@@ -20,6 +22,8 @@ public class EnemySight : MonsterController {
         monsterRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterRotation;
         loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
         roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
+
+        enemySightPlayerSpotted = false;
     }
 	
 	// Update is called once per frame
@@ -32,7 +36,11 @@ public class EnemySight : MonsterController {
             if (hit.transform.tag == "Player") {
 
                 //create an empty object for the player spotted location
-                Instantiate(prefabObject, player.transform.position, player.transform.rotation);
+                if (enemySightPlayerSpotted == false) {
+                    playerSpottedLocation = Instantiate(prefabObject, player.transform.position, player.transform.rotation).transform;
+                    enemySightPlayerSpotted = true;
+                }
+                
 
                 this.monsterBehaviour = MonsterBehaviours.Charge;
                 gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterBehaviours.Charge;
@@ -58,6 +66,7 @@ public class EnemySight : MonsterController {
             //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
             if (monsterTimer <= 0)
             {
+                enemySightPlayerSpotted = false;
                 gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
                 gameObject.GetComponent<MonsterController>().target = transform;
                 gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
