@@ -12,7 +12,7 @@ public class EnemySight : MonsterController {
     Transform playerStart, monsterStart;
     Quaternion playerRotation, monsterRotation;
     int loseInt, roundInt;
-
+    public Physics raycast;
     // Use this for initialization
     void Start () {
         base.Start();
@@ -20,6 +20,7 @@ public class EnemySight : MonsterController {
         monsterStart = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterStart;
         playerRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().playerRotation;
         monsterRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterRotation;
+        //raycast = Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 40f)
         //loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
         //roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
 
@@ -32,19 +33,38 @@ public class EnemySight : MonsterController {
         Debug.DrawRay(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized);
 
         //this is the charge the player raycast
-        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit)) {
-            if (hit.transform.tag == "Player") {
-
+        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 40f)) {
+            if ((hit.transform.tag == "Player") && (this.monsterBehaviour != MonsterBehaviours.Charge))
+            {
+                monsterTimer = 5;
                 //create an empty object for the player spotted location
-                if (enemySightPlayerSpotted == false) {
+                if (enemySightPlayerSpotted == false)
+                {
                     playerSpottedLocation = Instantiate(prefabObject, player.transform.position, player.transform.rotation).transform;
                     enemySightPlayerSpotted = true;
                 }
-                
+
 
                 this.monsterBehaviour = MonsterBehaviours.Charge;
                 gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterBehaviours.Charge;
                 gameObject.GetComponent<QuerySearch>().monsterBehaviour = MonsterBehaviours.Charge;
+            } else if ((hit.transform.tag != "Player") && (this.monsterBehaviour == MonsterBehaviours.Charge)){
+                monsterTimer = monsterTimer - Time.deltaTime;
+
+                //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
+                if (monsterTimer <= 0)
+                {
+                    enemySightPlayerSpotted = false;
+                    gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
+                    gameObject.GetComponent<MonsterController>().target = transform;
+                    gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
+                    gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<EnemySight>().transform;
+                    monsterBehaviour = MonsterBehaviours.Patrol;
+                    gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
+                    gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
+                    //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
+                    fixertest = 1;
+                }
             }
         }
         //this is the kill the player raycast
@@ -56,11 +76,11 @@ public class EnemySight : MonsterController {
                 monster.transform.position = monsterStart.position;
                 player.transform.rotation = playerRotation;
                 monster.transform.rotation = monsterRotation;
-                GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt++;
+                GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt ++;
                 GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt++;
             } 
         }
-        if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (Vector3.Distance(gameObject.transform.position, player.transform.position) > 30f)) {
+        /*if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (hit.transform.tag != "Player")){
             monsterTimer = monsterTimer - Time.deltaTime;
 
             //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
@@ -77,7 +97,7 @@ public class EnemySight : MonsterController {
                 //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
                 fixertest = 1;
             }
-        }  
+        }  */
     }
 
     public bool PlayerLocations() {

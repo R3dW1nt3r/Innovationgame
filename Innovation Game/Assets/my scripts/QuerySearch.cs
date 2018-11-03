@@ -65,7 +65,6 @@ public class QuerySearch : MonsterController {
 
 
     public Transform SearchForPlayerLocation(Transform playerSpottedLocation) {
-        print("hitinside");
         //this will skip a node. to be redone //maybe not look into it
         for (int i = 0; i < queryGraphNodes.Length; i++)
         {
@@ -77,6 +76,8 @@ public class QuerySearch : MonsterController {
                 }
             } else
                 playerLocation = playerSpottedLocation;
+
+            print(playerLocation.name);
         }
         return playerLocation;
     }

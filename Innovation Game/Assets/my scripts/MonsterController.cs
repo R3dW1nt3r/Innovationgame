@@ -73,6 +73,7 @@ public class MonsterController : NavigationAgent {
 
         distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
         gameObject.GetComponent<EnemySight>().target = target;
+        gameObject.GetComponent<QuerySearch>().target = target;
     }
 
     private void Patrol() {
