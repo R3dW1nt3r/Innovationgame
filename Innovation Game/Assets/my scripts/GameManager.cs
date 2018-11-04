@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         winInt = 0;
         loseInt = 0;
-        roundInt = 0;
+        roundInt = 1;
         totalRounds = 5;
         //playerStart = GameObject.FindGameObjectWithTag("PlayerStart").transform;
         //monsterStart = GameObject.FindGameObjectWithTag("MonsterStart").transform;
@@ -118,13 +118,13 @@ public class GameManager : MonoBehaviour
             fin.enabled = true;
         }
 
-        if (roundInt >= totalRounds)
+        if (roundInt >= 4)
         {
             fin.enabled = true;
             if (winInt > loseInt)
             {
                 fin.text = "player wins";
-            } else
+            } else if (loseInt > winInt)
                 fin.text = "player loses";
             Time.timeScale = 0;
         }

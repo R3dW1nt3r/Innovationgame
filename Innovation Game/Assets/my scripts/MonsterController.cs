@@ -12,7 +12,7 @@ public class MonsterController : NavigationAgent {
     public PlayerController player;
     public bool spottedPlayer = false;
     public Transform playerSpottedLocation = null;
-    public GameObject rayStart, rayEnd, monster, prefabObject;
+    public GameObject rayStart, rayEnd1, rayEnd2, rayEnd3, monster, prefabObject;
     public Transform randomPos;
     //Movement Varaibles
     public float moveSpeed = 10.0f;
@@ -120,6 +120,6 @@ public class MonsterController : NavigationAgent {
     private void Charge() {
         randomPos = gameObject.transform;
         target = player.transform;
-        agent.speed = 6f;
+        agent.speed = 14f;
     }
 }

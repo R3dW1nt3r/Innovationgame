@@ -13,6 +13,8 @@ public class EnemySight : MonsterController {
     Quaternion playerRotation, monsterRotation;
     int loseInt, roundInt;
     public Physics raycast;
+
+    public GameObject gameManager;
     // Use this for initialization
     void Start () {
         base.Start();
@@ -20,6 +22,7 @@ public class EnemySight : MonsterController {
         monsterStart = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterStart;
         playerRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().playerRotation;
         monsterRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterRotation;
+        gameManager = GameObject.Find("Game Manager");
         //raycast = Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 40f)
         //loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
         //roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
@@ -30,10 +33,10 @@ public class EnemySight : MonsterController {
 	// Update is called once per frame
 	void Update () {
         base.Update();
-        Debug.DrawRay(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized);
+        //Debug.DrawRay(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized);
 
         //this is the charge the player raycast
-        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 40f)) {
+        if ((Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd1.transform.position).normalized, out hit, 100f)) || (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd2.transform.position).normalized, out hit, 100f)) || (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd3.transform.position).normalized, out hit, 100f))) {
             if ((hit.transform.tag == "Player") && (this.monsterBehaviour != MonsterBehaviours.Charge))
             {
                 monsterTimer = 5;
@@ -68,7 +71,7 @@ public class EnemySight : MonsterController {
             }
         }
         //this is the kill the player raycast
-        if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 2f))
+        /*if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 2f))
         {
             if (hit.transform.tag == "Player")
             {
@@ -79,7 +82,8 @@ public class EnemySight : MonsterController {
                 GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt ++;
                 GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt++;
             } 
-        }
+        }*/
+
         /*if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (hit.transform.tag != "Player")){
             monsterTimer = monsterTimer - Time.deltaTime;
 
@@ -129,6 +133,23 @@ public class EnemySight : MonsterController {
             print(playerLocation);
             print(playerLocation);
             spottedPlayer = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            //print("goal reached");
+            monsterBehaviour = MonsterBehaviours.Patrol;
+            gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
+            gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
+            player.transform.position = playerStart.position;
+            monster.transform.position = monsterStart.position;
+            player.transform.rotation = playerRotation;
+            monster.transform.rotation = monsterRotation;
+            gameManager.GetComponent<GameManager>().loseInt++;
+            gameManager.GetComponent<GameManager>().roundInt++;
         }
     }
 }

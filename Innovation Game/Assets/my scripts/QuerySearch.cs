@@ -21,7 +21,48 @@ public class QuerySearch : MonsterController {
         for (int i = 0; i < queryGraphNodes.Length; i++) {
             nodesNotNeartoPlayerLocations.Add(queryGraphNodes[i].transform);
         }
-	}
+
+        //playtesting fixes to make the AI stick around bottlenecks at the beginning
+        //playerLocations additions
+        playerLocations.Add(queryGraphNodes[0].transform);
+        playerLocations.Add(queryGraphNodes[1].transform);
+        playerLocations.Add(queryGraphNodes[28].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[0].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[1].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[28].transform);
+
+        //nodesClosetoplayerlocations additions
+        playerLocations.Add(queryGraphNodes[32].transform);
+        playerLocations.Add(queryGraphNodes[35].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[32].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[35].transform);
+        
+        //nodesneartoplayerlocations additions
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[40].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[50].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[70].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[55].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[2].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[14].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[23].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[29].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[26].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[71].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[24].transform);
+        nodesNeartoPlayerLocations.Add(queryGraphNodes[27].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[40].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[50].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[70].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[55].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[2].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[14].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[23].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[29].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[26].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[71].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[24].transform);
+        nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[27].transform);
+    }
 	
 	// Update is called once per frame
 	void Update () {
