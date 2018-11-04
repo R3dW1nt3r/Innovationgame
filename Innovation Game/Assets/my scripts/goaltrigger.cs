@@ -43,10 +43,7 @@ using UnityEngine;
 
 public class goaltrigger : GameManager
 {
-
-    //GameObject player, monster;
     GameObject gameManager;
-    //Quaternion playerRotation, monsterRotation;
 
     // Use this for initialization
     void Start()
@@ -55,6 +52,7 @@ public class goaltrigger : GameManager
         gameManager = GameObject.Find("Game Manager");
     }
 
+    //if the player collides with this object they win a round
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

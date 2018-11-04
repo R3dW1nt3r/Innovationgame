@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class gizmoRepresentation : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        //OnGizmoDraw();
-	}
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -84,14 +84,14 @@ public class QuerySearch : MonsterController {
                 nodesNotNeartoPlayerLocations.Remove(playerLocations[i]);
                 for (int j = 0; j < queryGraphNodes.Length; j++)
                 {
-                    if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) <  20/*look into if this distance is reasonable*/) && (nodesClosetoPlayerLocations.Contains(queryGraphNodes[j].transform) != true))
+                    if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) <  20) && (nodesClosetoPlayerLocations.Contains(queryGraphNodes[j].transform) != true))
                     {
                         nodesClosetoPlayerLocations.Add(queryGraphNodes[j].transform);
                         nodesNeartoPlayerLocations.Remove(queryGraphNodes[j].transform);
                         nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j].transform);
                     } 
                     
-                    else if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) < 50 /*look into if this distance is reasonable*/) && (nodesNeartoPlayerLocations.Contains(queryGraphNodes[j].transform) != true))
+                    else if ((Vector3.Distance(playerLocations[i].transform.position, queryGraphNodes[j].transform.position) < 50) && (nodesNeartoPlayerLocations.Contains(queryGraphNodes[j].transform) != true))
                     {
                         nodesNeartoPlayerLocations.Add(queryGraphNodes[j].transform);
                         nodesNotNeartoPlayerLocations.Remove(queryGraphNodes[j].transform);
@@ -104,9 +104,8 @@ public class QuerySearch : MonsterController {
         gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
     }
 
-
+    //determine the node closest to the empty object and return the node.
     public Transform SearchForPlayerLocation(Transform playerSpottedLocation) {
-        //this will skip a node. to be redone //maybe not look into it
         for (int i = 0; i < queryGraphNodes.Length; i++)
         {
             if (playerLocation != null)
@@ -117,8 +116,6 @@ public class QuerySearch : MonsterController {
                 }
             } else
                 playerLocation = playerSpottedLocation;
-
-            print(playerLocation.name);
         }
         return playerLocation;
     }

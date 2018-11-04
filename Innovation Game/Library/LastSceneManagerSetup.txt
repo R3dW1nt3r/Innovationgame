@@ -1,5 +1,4 @@
 sceneSetups:
-- path: C:/Users/Jarad/Downloads/GamifiationAssignment-master/GamifiationAssignment-master/Clicker
-    Gamification/Assets/Calculus Scroll.unity
+- path: Assets/innovation game.unity
   isLoaded: 1
   isActive: 1

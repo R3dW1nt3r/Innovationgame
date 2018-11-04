@@ -19,12 +19,4 @@ public class LinkedNodes : MonoBehaviour {
 			linkedNodesIndex[i] = linkedNodeObjects[i].GetComponent<LinkedNodes>().index;
 		}
 	}
-	
-	// Update is called once per frame
-	/*void Update () {
-		//Draw lines between each connected waypoint
-		foreach(GameObject linkedNode in linkedNodeObjects) {
-			Debug.DrawLine (transform.position, linkedNode.transform.position,  Color.green);
-		}
-	}*/
 }

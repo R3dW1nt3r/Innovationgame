@@ -23,19 +23,13 @@ public class EnemySight : MonsterController {
         playerRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().playerRotation;
         monsterRotation = GameObject.Find("Game Manager").GetComponent<GameManager>().monsterRotation;
         gameManager = GameObject.Find("Game Manager");
-        //raycast = Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 40f)
-        //loseInt = GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt;
-        //roundInt = GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt;
-
         enemySightPlayerSpotted = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        base.Update();
-        //Debug.DrawRay(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized);
 
-        //this is the charge the player raycast
+    // Update is called once per frame
+    void Update () {
+        base.Update();
+        //if the player obstructs any one of the raycasts, create an empty object to be used for the transform, change to a charge state
         if ((Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd1.transform.position).normalized, out hit, 100f)) || (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd2.transform.position).normalized, out hit, 100f)) || (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd3.transform.position).normalized, out hit, 100f))) {
             if ((hit.transform.tag == "Player") && (this.monsterBehaviour != MonsterBehaviours.Charge))
             {
@@ -51,10 +45,11 @@ public class EnemySight : MonsterController {
                 this.monsterBehaviour = MonsterBehaviours.Charge;
                 gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterBehaviours.Charge;
                 gameObject.GetComponent<QuerySearch>().monsterBehaviour = MonsterBehaviours.Charge;
-            } else if ((hit.transform.tag != "Player") && (this.monsterBehaviour == MonsterBehaviours.Charge)){
+            }
+            //else if the monster is currently in a charge state and the player hasn't been obstructing the raycast for more than 5 seconds set the target to the current location 
+            //and reweigh the proabilities of going to locations  then revert to patrol state.
+            else if ((hit.transform.tag != "Player") && (this.monsterBehaviour == MonsterBehaviours.Charge)) {
                 monsterTimer = monsterTimer - Time.deltaTime;
-
-                //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
                 if (monsterTimer <= 0)
                 {
                     enemySightPlayerSpotted = false;
@@ -65,82 +60,17 @@ public class EnemySight : MonsterController {
                     monsterBehaviour = MonsterBehaviours.Patrol;
                     gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
                     gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
-                    //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
                     fixertest = 1;
                 }
             }
         }
-        //this is the kill the player raycast
-        /*if (Physics.Raycast(rayStart.transform.position, -(rayStart.transform.position - rayEnd.transform.position).normalized, out hit, 2f))
-        {
-            if (hit.transform.tag == "Player")
-            {
-                player.transform.position = playerStart.position;
-                monster.transform.position = monsterStart.position;
-                player.transform.rotation = playerRotation;
-                monster.transform.rotation = monsterRotation;
-                GameObject.Find("Game Manager").GetComponent<GameManager>().loseInt ++;
-                GameObject.Find("Game Manager").GetComponent<GameManager>().roundInt++;
-            } 
-        }*/
-
-        /*if ((this.monsterBehaviour == MonsterBehaviours.Charge) && (hit.transform.tag != "Player")){
-            monsterTimer = monsterTimer - Time.deltaTime;
-
-            //if timer finishes this code searches for the waypoint closest to the location the player has been spotted and adds both adds it to the player locations list and sees if it is in any other list and removes it from those
-            if (monsterTimer <= 0)
-            {
-                enemySightPlayerSpotted = false;
-                gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
-                gameObject.GetComponent<MonsterController>().target = transform;
-                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
-                gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<EnemySight>().transform;
-                monsterBehaviour = MonsterBehaviours.Patrol;
-                gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
-                gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
-                //this is a very hardcodey attempt which works to stop the monster keeping the player as its target. it does this in enemysight
-                fixertest = 1;
-            }
-        }  */
     }
 
-    public bool PlayerLocations() {
-
-        //this will skip a node. to be redone //maybe not look into it
-        for (int i = 0; i < gameObject.GetComponent<QuerySearch>().queryGraphNodes.Length; i++)
-        {
-            if ((gameObject.GetComponent<QuerySearch>().playerLocation != null) &&
-            (Vector3.Distance(gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform.position, playerSpottedLocation.position) <
-            Vector3.Distance(gameObject.GetComponent<QuerySearch>().playerLocation.transform.position, playerSpottedLocation.position)))
-            {
-                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform;
-            } else
-                gameObject.GetComponent<QuerySearch>().playerLocation = gameObject.GetComponent<QuerySearch>().queryGraphNodes[i].transform;
-        }
-
-        locationFound = true;
-        return locationFound;
-    }
-
-    public void SpotPlayer(Transform playerLocation) {
-        if (spottedPlayer == false)
-        {
-            playerSpottedLocation = playerLocation;
-            print(playerLocation);
-            gameObject.GetComponent<QuerySearch>().playerSpottedLocation = playerLocation;
-            print(playerLocation);
-            gameObject.GetComponent<MonsterController>().playerSpottedLocation = playerLocation;
-            print(playerLocation);
-            print(playerLocation);
-            spottedPlayer = true;
-        }
-    }
-
+    //if the player collides with this object, the monster wins a round revert to a patrol state and send the player and monster to their start locations.
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            //print("goal reached");
             monsterBehaviour = MonsterBehaviours.Patrol;
             gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
             gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;

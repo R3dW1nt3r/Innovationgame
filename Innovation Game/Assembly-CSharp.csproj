@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\my scripts\EnemySight.cs" />
-    <Compile Include="Assets\my scripts\EventTrigger.cs" />
     <Compile Include="Assets\my scripts\GameManager.cs" />
     <Compile Include="Assets\my scripts\gizmoRepresentation.cs" />
     <Compile Include="Assets\my scripts\goaltrigger.cs" />
@@ -70,7 +69,6 @@
     <Compile Include="Assets\my scripts\MonsterController.cs" />
     <Compile Include="Assets\my scripts\NavigationAgent.cs" />
     <Compile Include="Assets\my scripts\PlayerController.cs" />
-    <Compile Include="Assets\my scripts\PlayerUnique.cs" />
     <Compile Include="Assets\my scripts\QuerySearch.cs" />
     <Compile Include="Assets\my scripts\WaypointGraph.cs" />
     <Reference Include="UnityEditor.StandardEvents">
