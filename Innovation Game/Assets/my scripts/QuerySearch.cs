@@ -10,8 +10,8 @@ public class QuerySearch : MonsterController {
     public List<Transform> nodesNeartoPlayerLocations = new List<Transform>();
     public List<Transform> nodesNotNeartoPlayerLocations = new List<Transform>();
 
-    //need to rename this
     public GameObject[] queryGraphNodes;
+    public List<Transform> queryGraphNodeTransforms;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +20,10 @@ public class QuerySearch : MonsterController {
         //sets all locations in the query search - grabs their transforms
         for (int i = 0; i < queryGraphNodes.Length; i++) {
             nodesNotNeartoPlayerLocations.Add(queryGraphNodes[i].transform);
+        }
+
+        for (int i = 0; i < queryGraphNodes.Length; i++) {
+            queryGraphNodeTransforms.Add(queryGraphNodes[i].transform);
         }
 
         //playtesting fixes to make the AI stick around bottlenecks at the beginning
@@ -98,6 +102,13 @@ public class QuerySearch : MonsterController {
                     } 
                 }
             }
+
+            for (int i = 0; i < playerLocations.Count; i++) {
+                if (!queryGraphNodeTransforms.Contains(playerLocations[i])) {
+                    playerLocations.Remove(playerLocations[i]);
+                }
+            }
+
             locationFound = true;
         }
         monsterBehaviour = MonsterBehaviours.Patrol;
