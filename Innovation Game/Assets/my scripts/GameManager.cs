@@ -55,16 +55,16 @@ public class GameManager : MonoBehaviour
         }
 
         //if the round number is greater than or equal to 4 and if the player has won more rounds than the seeker the player wins else the seeker wins
-        if (roundInt >= 4)
+        if ((winInt >= 3) && (winInt > loseInt))
         {
             fin.enabled = true;
-            if (winInt > loseInt)
-            {
-                fin.text = "player wins";
-            } else if (loseInt > winInt)
-                fin.text = "seeker wins";
+            fin.text = "player wins";
+            Time.timeScale = 0;
+        } else if ((loseInt >= 3) && (loseInt > winInt)) {
+            fin.enabled = true;
+            fin.text = "seeker wins";
             Time.timeScale = 0;
         }
-
+        
     }
 }

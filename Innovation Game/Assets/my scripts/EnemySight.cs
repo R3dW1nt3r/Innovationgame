@@ -71,15 +71,21 @@ public class EnemySight : MonsterController {
     {
         if (other.tag == "Player")
         {
-            monsterBehaviour = MonsterBehaviours.Patrol;
-            gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
-            gameObject.GetComponent<EnemySight>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
+            enemySightPlayerSpotted = false;
+            gameObject.GetComponent<QuerySearch>().EnvironementalQuerySearch();
+            gameObject.GetComponent<MonsterController>().target = transform;
+            gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<MonsterController>().transform;
+            gameObject.GetComponent<MonsterController>().target = gameObject.GetComponent<EnemySight>().transform;
             player.transform.position = playerStart.position;
             monster.transform.position = monsterStart.position;
             player.transform.rotation = playerRotation;
             monster.transform.rotation = monsterRotation;
             gameManager.GetComponent<GameManager>().loseInt++;
             gameManager.GetComponent<GameManager>().roundInt++;
+            monsterBehaviour = MonsterBehaviours.Patrol;
+            gameObject.GetComponent<MonsterController>().monsterBehaviour = MonsterController.MonsterBehaviours.Patrol;
+            gameObject.GetComponent<QuerySearch>().monsterBehaviour = EnemySight.MonsterBehaviours.Patrol;
+            
         }
     }
 }
